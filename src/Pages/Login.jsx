@@ -64,8 +64,8 @@ export default function Login() {
 
 
       return (
-            <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50 p-4 font-sans">
-                  <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-8 shadow-md">
+            <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50 p-4 font-sans h-screen bg-[url('/login.avif')] bg-center bg-cover">
+                  <div className="w-full max-w-md rounded-2xl bg-white/85 backdrop-blur-sm p-8 shadow-xl">
 
                         {/* Header */}
                         <div className="text-center mb-8">
@@ -89,7 +89,18 @@ export default function Login() {
 
                               {/* Password Input */}
                               <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                    <div className="flex justify-between items-center mb-1">
+                                          <label className="block text-sm font-medium text-gray-700">
+                                                Password
+                                          </label>
+
+                                          <Link
+                                                to="/forgot-password"
+                                                className="text-sm font-semibold text-blue-600 hover:underline"
+                                          >
+                                                Forgot Password?
+                                          </Link>
+                                    </div>
                                     <input
                                           type="password"
                                           placeholder="••••••••"

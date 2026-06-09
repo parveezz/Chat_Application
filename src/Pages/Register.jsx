@@ -86,7 +86,7 @@ const Register = () => {
       };
 
       return (
-            <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50 p-4 font-sans">
+            <div className="flex min-h-screen w-screen items-center justify-center p-4 font-sans bg-[url('/register.avif')] bg-cover bg-center">
                   <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-8 shadow-md">
 
                         {/* Header */}
