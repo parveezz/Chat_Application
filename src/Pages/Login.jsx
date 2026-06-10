@@ -22,6 +22,8 @@ export default function Login() {
                   return;
             }
 
+
+
             if (trimmedPassword.length < 8) {
                   toast.error("Password must be at least 8 characters");
                   return;
@@ -46,8 +48,15 @@ export default function Login() {
                         })
                   });
                   const response = await data.json();
+
+                  if (response.email !== trimmedemail || response.password !== trimmedPassword) {
+                        toast.error(response.message);
+                        return
+                  }
+
                   if (!response.success) {
                         toast.error("Failed to login")
+
                   } else {
                         localStorage.setItem("Token", response.token);
                         localStorage.setItem("userDetails", JSON.stringify(response.data));
@@ -58,13 +67,15 @@ export default function Login() {
                   console.log(e)
             } finally {
                   setLoading(false);
+                  setUserName("");
+                  setUserPassword("")
             }
       };
 
 
 
       return (
-            <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50 p-4 font-sans h-screen bg-[url('/login.avif')] bg-center bg-cover">
+            <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50 p-4 font-sans h-screen bg-[url('/login.avif')] bg-center bg-cover ">
                   <div className="w-full max-w-md rounded-2xl bg-white/85 backdrop-blur-sm p-8 shadow-xl">
 
                         {/* Header */}

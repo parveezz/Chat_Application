@@ -28,6 +28,8 @@ const ForgotPassword = () => {
 
         } catch (e) {
             console.log(e);
+        } finally {
+            setStoreEmail("")
         }
     }
 
@@ -38,7 +40,7 @@ const ForgotPassword = () => {
 
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <h2 className="text-2xl font-bold text-gray-900">Reset Password</h2>
+                    <h2 className="text-2xl font-bold text-gray-900">Forgot Password</h2>
                     <p className="text-sm text-gray-500 mt-1">Enter your email to receive a reset link</p>
                 </div>
 

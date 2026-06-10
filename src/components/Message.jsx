@@ -7,7 +7,7 @@ const Message = () => {
       const logoutFns = () => {
             localStorage.removeItem("Token");
             localStorage.clear();
-            toast.success("Logout is Sucessfully")
+            toast.success("logged ")
             navigate("/")
 
       }
