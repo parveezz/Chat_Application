@@ -46,12 +46,12 @@ export default function Login() {
                         })
                   });
                   const response = await data.json();
-                  console.log(response);
                   if (!response.success) {
                         toast.error("Failed to login")
                   } else {
                         localStorage.setItem("Token", response.token);
-                        toast.success("Login is Sucessfully")
+                        localStorage.setItem("userDetails", JSON.stringify(response.data));
+                        toast.success("Login is Sucessfully");
                         navigate("/dashboard", { replace: true })
                   }
             } catch (e) {

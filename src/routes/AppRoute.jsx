@@ -4,6 +4,7 @@ import Register from "../Pages/Register"
 import ProtectedRoute from "./ProtectedRoute"
 import Dashbaord from "../Pages/Dashbaord"
 import ForgotPassword from "../Pages/Forgotpassword"
+import Settings from "../Pages/Settings"
 
 
 const AppRoute = () => {
@@ -23,6 +24,15 @@ const AppRoute = () => {
                               </ProtectedRoute>
                         }
                   />
+                  <Route
+                        path="/dashboard/settings"
+                        element={
+                              <ProtectedRoute>
+                                    <Settings />
+                              </ProtectedRoute>
+                        }
+                  />
+
             </Routes>
       )
 }
