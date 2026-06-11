@@ -68,8 +68,13 @@ export default function Login() {
 
 
       return (
-            <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50 p-4 font-sans h-screen bg-[url('/Suhana.jpeg')] bg-center bg-contain ">
-                  <div className="w-full max-w-md rounded-2xl bg-white/85 backdrop-blur-sm p-8 shadow-xl ]">
+            <div
+                  className="min-h-screen w-full flex items-center justify-center
+  bg-gray-50 p-4 font-sans
+  bg-[url('/Suhana.jpeg')]
+  bg-cover bg-center bg-no-repeat"
+            >
+                  <div className="w-full max-w-md rounded-2xl bg-white/85 backdrop-blur-sm p-8 shadow-xl ]display-none">
 
                         {/* Header */}
                         <div className="text-center mb-8">
