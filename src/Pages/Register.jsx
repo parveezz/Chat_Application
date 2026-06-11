@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { BaseUrl } from "../../Baseurl";
 import toast from "react-hot-toast";
 
@@ -10,6 +10,7 @@ const Register = () => {
       const [userEmail, setUserEmail] = useState("");
       const [image, setImage] = useState(null);
 
+      const navigate = useNavigate()
       const registerUser = async (e) => {
             e.preventDefault();
 
@@ -76,9 +77,12 @@ const Register = () => {
                   if (!data.success) {
                         toast.error(data.message || "Registration failed");
                         return;
+                  } else {
+
+                        toast.success("Registration successful");
+                        navigate("/login")
                   }
 
-                  toast.success("Registration successful");
             } catch (error) {
                   console.log(error);
                   toast.error("Something went wrong");
@@ -100,7 +104,8 @@ const Register = () => {
                         </div>
 
                         {/* Form Elements */}
-                        <form className="space-y-5" onSubmit={registerUser} >
+                        <form className="space-y-5" onSubmit={registerUser}
+                        >
 
                               {/* Name Input */}
                               <div>

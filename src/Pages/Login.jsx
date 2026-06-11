@@ -49,11 +49,6 @@ export default function Login() {
                   });
                   const response = await data.json();
 
-                  if (response.email !== trimmedemail || response.password !== trimmedPassword) {
-                        toast.error(response.message);
-                        return
-                  }
-
                   if (!response.success) {
                         toast.error("Failed to login")
 
@@ -67,8 +62,6 @@ export default function Login() {
                   console.log(e)
             } finally {
                   setLoading(false);
-                  setUserName("");
-                  setUserPassword("")
             }
       };
 
