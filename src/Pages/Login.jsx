@@ -8,6 +8,7 @@ export default function Login() {
       const [userName, setUserName] = useState("");
       const [userPassword, setUserPassword] = useState("");
       const [loading, setLoading] = useState(false);
+      const [showLogin, setShowLogin] = useState(false);
 
       const navigate = useNavigate();
       const loginUser = async (e) => {
@@ -74,7 +75,16 @@ export default function Login() {
   bg-[url('/Suhana.jpeg')]
   bg-cover bg-center bg-no-repeat"
             >
-                  <div className="w-full max-w-md rounded-2xl bg-white/85 backdrop-blur-sm p-8 shadow-xl ]display-none">
+
+                  {!showLogin && (
+                        <button
+                              onClick={() => setShowLogin(true)}
+                              className="absolute top-6 right-6 bg-white px-6 py-2 rounded-lg shadow-lg font-semibold hover:bg-gray-100"
+                        >
+                              Login
+                        </button>
+                  )}
+                  {showLogin && <div className="w-full max-w-md rounded-2xl bg-white/85 backdrop-blur-sm p-8 shadow-xl ]display-none">
 
                         {/* Header */}
                         <div className="text-center mb-8">
@@ -136,7 +146,7 @@ export default function Login() {
                               </Link>
                         </div>
 
-                  </div>
+                  </div>}
             </div>
       );
 }
