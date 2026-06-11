@@ -68,8 +68,8 @@ export default function Login() {
 
 
       return (
-            <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50 p-4 font-sans h-screen bg-[url('/login.avif')] bg-center bg-cover ">
-                  <div className="w-full max-w-md rounded-2xl bg-white/85 backdrop-blur-sm p-8 shadow-xl">
+            <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50 p-4 font-sans h-screen bg-[url('/Suhana.jpeg')] bg-center bg-contain ">
+                  <div className="w-full max-w-md rounded-2xl bg-white/85 backdrop-blur-sm p-8 shadow-xl ]">
 
                         {/* Header */}
                         <div className="text-center mb-8">
