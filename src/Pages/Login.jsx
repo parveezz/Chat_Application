@@ -8,7 +8,6 @@ export default function Login() {
       const [userName, setUserName] = useState("");
       const [userPassword, setUserPassword] = useState("");
       const [loading, setLoading] = useState(false);
-      const [showLogin, setShowLogin] = useState(false);
 
       const navigate = useNavigate();
       const loginUser = async (e) => {
@@ -72,19 +71,10 @@ export default function Login() {
             <div
                   className="min-h-screen w-full flex items-center justify-center
   bg-gray-50 p-4 font-sans
-  bg-[url('/Suhana.jpeg')]
+  bg-[url('/login.avif')]
   bg-cover bg-center bg-no-repeat"
             >
-
-                  {!showLogin && (
-                        <button
-                              onClick={() => setShowLogin(true)}
-                              className="absolute top-6 right-6 bg-white px-6 py-2 rounded-lg shadow-lg font-semibold hover:bg-gray-100"
-                        >
-                              Login
-                        </button>
-                  )}
-                  {showLogin && <div className="w-full max-w-md rounded-2xl bg-white/85 backdrop-blur-sm p-8 shadow-xl ]display-none">
+                  <div className="w-full max-w-md rounded-2xl bg-white/85 backdrop-blur-sm p-8 shadow-xl ]display-none">
 
                         {/* Header */}
                         <div className="text-center mb-8">
@@ -101,7 +91,7 @@ export default function Login() {
                                     <input
                                           type="email"
                                           placeholder="name@company.com"
-                                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-md text-gray-900 outline-none transition focus:border-blue-500 font-medium focus:ring-1 focus:ring-blue-500"
                                           onChange={(e) => { setUserName(e.target.value) }}
                                     />
                               </div>
@@ -123,7 +113,7 @@ export default function Login() {
                                     <input
                                           type="password"
                                           placeholder="••••••••"
-                                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-md text-gray-900 font-medium outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                                           onChange={(e) => { setUserPassword(e.target.value) }}
                                     />
                               </div>
@@ -146,7 +136,7 @@ export default function Login() {
                               </Link>
                         </div>
 
-                  </div>}
+                  </div>
             </div>
       );
 }
