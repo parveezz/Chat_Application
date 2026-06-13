@@ -3,8 +3,9 @@ import { BaseUrl, ServerUrl } from "../../Baseurl";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PromptLogout from "./PromptLogout";
+import { IoArrowBack } from "react-icons/io5";
 
-const ProfileDetails = ({ onClose }) => {
+const ProfileDetails = ({ isOpen, onClose }) => {
       const [storeInfo, setStoreInfo] = useState(null);
       const [openLogout, setOpenLogout] = useState(false);
       const [about, setAbout] = useState("");
@@ -76,20 +77,26 @@ const ProfileDetails = ({ onClose }) => {
             navigate("/login")
       }
       return (
-            <div className="absolute top-0 right-0 h-full w-[380px] bg-white border-l border-gray-200 shadow-xl flex flex-col z-50">
+            <div
+                  className={`absolute top-0 left-0 h-full w-[380px] bg-white border-r border-gray-200 shadow-xl flex flex-col z-50 transition-all duration-300 ease-in-out ${isOpen
+                        ? "translate-x-0 opacity-100"
+                        : "-translate-x-full opacity-0"
+                        }`}
+            >
                   {/* Header */}
-                  <div className="flex items-center justify-between px-6 py-4 border-b bg-gray-50">
-                        <h2 className="text-xl font-bold text-gray-800">
-                              Profile Settings
-                        </h2>
 
+                  <div className="flex items-center px-6 py-4 border-b border-gray-100 bg-yellow-50">
                         <button
                               type="button"
                               onClick={onClose}
-                              className="w-9 h-9 flex items-center justify-center rounded-full bg-white shadow hover:bg-red-50 hover:text-red-500 transition"
+                              className="mr-3 text-gray-700  transition cursor-pointer"
                         >
-                              ✕
+                              <IoArrowBack size={24} />
                         </button>
+
+                        <h2 className="text-xl font-bold text-gray-800">
+                              Profile Settings
+                        </h2>
                   </div>
 
                   <div className="p-6">
@@ -109,9 +116,6 @@ const ProfileDetails = ({ onClose }) => {
                                                 {storeInfo?.name}
                                           </h3>
 
-                                          <p className="text-blue-100">
-                                                {storeInfo?.email}
-                                          </p>
 
                                           <span
                                                 className={`font-medium ${storeInfo?.isOnline
@@ -128,8 +132,17 @@ const ProfileDetails = ({ onClose }) => {
                               </div>
                         </div>
 
+                        <div className=" rounded-xl p-4 ">
+                              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                                    Email
+                              </p>
+
+                              <p className="text-sm font-semibold text-gray-800 break-all">
+                                    {storeInfo?.email}
+                              </p>
+                        </div>
                         {/* About Section */}
-                        <div className="bg-gray-50 rounded-xl p-4">
+                        <div className=" rounded-xl p-4">
                               <h4 className="text-sm font-semibold text-gray-500 uppercase mb-3">
                                     About
                               </h4>
@@ -168,11 +181,13 @@ const ProfileDetails = ({ onClose }) => {
                               </button>
                         </div>
                   </div>
-                  {openLogout &&
+                  {
+                        openLogout &&
                         <PromptLogout onClose={() => { setOpenLogout(false) }}
                               onLogout={() => { logoutFns() }}
-                        />}
-            </div>
+                        />
+                  }
+            </div >
       );
 };
 

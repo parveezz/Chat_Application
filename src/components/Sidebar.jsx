@@ -5,9 +5,10 @@ import ProfileDetails from "./ProfileDetails";
 import { ServerUrl } from "../../Baseurl";
 import Chatbox from "./Chatbox";
 
-
-const Sidebar = () => {
+const Sidebar = ({ setSelectedUser }) => {
       const [openSearch, setOpenSearch] = useState(false);
+      const [filterName, setFilterName] = useState("")
+
       const [showProfile, setshowProfile] = useState(false)
       const [time, setTime] = useState({
             hours: "00",
@@ -54,9 +55,8 @@ const Sidebar = () => {
             return () => clearInterval(interval);
       }, []);
 
-
       return (
-            <aside className="w-full sm:w-[320px] md:w-[360px] h-screen border-r border-gray-200 bg-white flex flex-col select-none">
+            <aside className="relative w-full sm:w-[320px] md:w-[360px] h-screen border-r border-gray-200 bg-white flex flex-col select-none overflow-hidden">
 
                   {/* Header */}
                   <div className="p-4 border-b border-gray-100 flex flex-col gap-2">
@@ -123,11 +123,17 @@ const Sidebar = () => {
                                           type="text"
                                           placeholder="Search..."
                                           className="w-full rounded-xl shadow-md bg-gray-50 py-2 pl-10 pr-4 text-sm outline-none focus:border-blue-500 placeholder:text-gray-400"
+                                          onChange={(e) => { setFilterName(e.target.value) }}
                                     />
                               </div>
                         </div>
                   </div>
-                  <Chatbox />
+
+                  {/* chat box */}
+                  <Chatbox
+                        filterName={filterName}
+                        setSelectedUser={setSelectedUser}
+                  />
 
 
                   <div className="mt-auto px-2 sm:px-4 py-3">
@@ -163,7 +169,10 @@ const Sidebar = () => {
 
                         </div>
                   </div>
-                  {showProfile && <ProfileDetails onClose={() => { setshowProfile(false) }} />}
+                  <ProfileDetails
+                        isOpen={showProfile}
+                        onClose={() => setshowProfile(false)}
+                  />
             </aside >
       );
 };
