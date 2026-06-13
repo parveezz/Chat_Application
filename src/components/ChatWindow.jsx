@@ -3,13 +3,53 @@ import { IoSend } from "react-icons/io5";
 import { HiDotsHorizontal, HiOutlinePhotograph } from "react-icons/hi";
 import { BsEmojiSmile } from "react-icons/bs";
 import { FiPlus } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserModal from "./UserModal";
+import { sockets } from "../../sockets";
+import toast from "react-hot-toast";
 
 const ChatWindow = ({ data }) => {
       const [openUserModal, setOpenUserModal] = useState(false);
-
+      const [message, setMessage] = useState("");
       if (!data) return null;
+
+
+      useEffect(() => {
+            sockets.connect();
+
+            sockets.on("error", (err) => {
+                  console.log("error", err.message)
+            })
+
+            sockets.on("disconnect", (msg) => {
+                  console.log("disconnect", msg)
+            })
+
+            sockets.on("connect", () => {
+                  console.log("Connected:", sockets.id);
+            })
+
+            return () => {
+                  sockets.off("connect");
+                  sockets.off("disconnect");
+                  sockets.off("connect");
+            }
+      }, []);
+
+
+      const sendMessage = () => {
+            if (!message.trim()) {
+                  toast.error("Enter the Message")
+                  return
+            }
+
+            sockets.emit("sendMessage", {
+                  message,
+                  receiverId: data._id,
+                  senderId: localStorage.getItem("Token")
+            })
+            setMessage("")
+      }
 
       return (
             <div className="flex h-screen bg-white font-sans">
@@ -58,7 +98,8 @@ const ChatWindow = ({ data }) => {
                         <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
                               <div className="flex justify-center items-center h-full">
                                     <p className="text-gray-400">
-                                          No messages yet
+                                          {message
+                                          }
                                     </p>
                               </div>
                         </div>
@@ -78,11 +119,20 @@ const ChatWindow = ({ data }) => {
                                     <div className="flex-1 flex items-center bg-gray-100 rounded-full px-3">
                                           <input
                                                 type="text"
+                                                value={message}
                                                 placeholder="Type a message..."
                                                 className="flex-1 bg-transparent px-2 py-3 outline-none text-sm"
+                                                onChange={(e) => { setMessage(e.target.value) }}
+                                                onKeyDown={(e) => {
+                                                      if (e.key === "Enter") {
+                                                            sendMessage()
+                                                      }
+                                                }}
                                           />
 
-                                          <button className="p-2 rounded-full hover:bg-gray-200 transition cursor-pointer">
+                                          <button className="p-2 rounded-full hover:bg-gray-200 transition cursor-pointer"
+
+                                          >
                                                 <BsEmojiSmile
                                                       size={20}
                                                       className="text-gray-600"
@@ -90,7 +140,10 @@ const ChatWindow = ({ data }) => {
                                           </button>
                                     </div>
 
-                                    <button className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition cursor-pointer shadow-sm">
+                                    <button className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition cursor-pointer shadow-sm"
+
+                                          onClick={() => { sendMessage() }}
+                                    >
                                           <IoSend size={18} />
                                     </button>
 
