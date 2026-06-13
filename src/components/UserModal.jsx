@@ -6,7 +6,7 @@ const UserModal = ({ data, onClose }) => {
       if (!data) return null;
 
       return (
-            <div className="w-[350px] h-full bg-white border-l border-gray-200 shadow-sm flex flex-col">
+            <div className="fixed inset-y-0 right-0 z-50 w-full max-w-[350px] bg-white border-l border-gray-200 shadow-xl flex flex-col md:relative md:w-[350px] md:shadow-sm">
 
                   {/* Header */}
                   <div className="flex items-center justify-between p-4 border-b border-gray-200">

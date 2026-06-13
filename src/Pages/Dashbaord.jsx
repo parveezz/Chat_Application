@@ -8,13 +8,13 @@ const Dashboard = () => {
 
       return (
             <section className="w-full h-screen flex bg-gray-100">
-                  <div className="w-[360px] bg-white border-r border-gray-200 shadow-sm">
+                  <div className={`w-full md:w-[360px] bg-white border-r border-gray-200 shadow-sm ${selectedUser ? "hidden md:block" : "block"}`}>
                         <Sidebar setSelectedUser={setSelectedUser} />
                   </div>
 
-                  <div className="flex-1 bg-gray-50">
+                  <div className={`flex-1 bg-gray-50 ${selectedUser ? "block" : "hidden md:block"}`}>
                         {selectedUser ? (
-                              <ChatWindow data={selectedUser} />
+                              <ChatWindow data={selectedUser} setSelectedUser={setSelectedUser} />
                         ) : (
                               <div className="h-full flex items-center justify-center">
                                     <div className="text-center">

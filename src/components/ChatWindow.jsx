@@ -1,5 +1,5 @@
 
-import { IoSend } from "react-icons/io5";
+import { IoSend, IoArrowBack } from "react-icons/io5";
 import { HiDotsHorizontal, HiOutlinePhotograph } from "react-icons/hi";
 import { BsEmojiSmile } from "react-icons/bs";
 import { FiPlus } from "react-icons/fi";
@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { ServerUrl } from "../../ServerUrl";
 import { BaseUrl } from "../../Baseurl";
 
-const ChatWindow = ({ data }) => {
+const ChatWindow = ({ data, setSelectedUser }) => {
       const [openUserModal, setOpenUserModal] = useState(false);
       const [message, setMessage] = useState("");
       const [recievedMessage, setRecievedMessages] = useState([]);
@@ -111,17 +111,25 @@ const ChatWindow = ({ data }) => {
       }, [data?._id, token]);
 
       return (
-            <div className="flex h-screen bg-white font-sans">
+            <div className="flex h-screen bg-white font-sans relative overflow-hidden">
 
                   {/* Chat Area */}
                   <div
-                        className={`flex flex-col transition-all duration-300 ${openUserModal
-                              ? "w-[calc(100%-350px)]"
-                              : "w-full"
+                        className={`flex flex-col transition-all duration-300 w-full ${openUserModal
+                              ? "md:w-[calc(100%-350px)]"
+                              : ""
                               }`}
                   >
                         {/* Header */}
-                        <div className="flex items-center gap-4 p-4 border-b border-gray-200 bg-white shadow-sm">
+                        <div className="flex items-center gap-3 p-4 border-b border-gray-200 bg-white shadow-sm">
+                              {/* Back Button (Mobile Only) */}
+                              <button 
+                                    className="md:hidden p-1 rounded-full hover:bg-gray-100 transition cursor-pointer"
+                                    onClick={() => setSelectedUser(null)}
+                              >
+                                    <IoArrowBack size={24} className="text-gray-600" />
+                              </button>
+
                               <img
                                     src={`${ServerUrl}${data.avatar}`}
                                     alt={data.name}
