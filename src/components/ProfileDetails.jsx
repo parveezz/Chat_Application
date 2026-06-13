@@ -2,9 +2,11 @@ import toast from "react-hot-toast";
 import { BaseUrl, ServerUrl } from "../../Baseurl";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PromptLogout from "./PromptLogout";
 
 const ProfileDetails = ({ onClose }) => {
       const [storeInfo, setStoreInfo] = useState(null);
+      const [openLogout, setOpenLogout] = useState(false);
       const [about, setAbout] = useState("");
       const [saving, setSaving] = useState(false);
 
@@ -160,12 +162,16 @@ const ProfileDetails = ({ onClose }) => {
                               <button
                                     type="button"
                                     className="px-5 py-2.5 bg-red-500 text-white font-medium rounded-lg shadow-sm hover:bg-red-600 active:scale-95 transition-all duration-200"
-                                    onClick={() => { logoutFns() }}
+                                    onClick={() => { setOpenLogout(true) }}
                               >
                                     Logout
                               </button>
                         </div>
                   </div>
+                  {openLogout &&
+                        <PromptLogout onClose={() => { setOpenLogout(false) }}
+                              onLogout={() => { logoutFns() }}
+                        />}
             </div>
       );
 };

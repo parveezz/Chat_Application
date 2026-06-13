@@ -19,6 +19,7 @@ const Chatbox = () => {
 
                         const response = await data.json();
                         setStoreUser(response.data);
+                        console.log(response.data)
 
                         if (!response.success) {
                               return toast.error("failed to fetch the user");
@@ -33,7 +34,26 @@ const Chatbox = () => {
             fetchingUsers()
       }, [token]);
 
-      console.log(storeUser)
+      function changeTime(time) {
+            const lastSeen = new Date(time);
+            const now = new Date();
+
+            const diff = now - lastSeen;
+
+            const minutes = Math.floor(diff / (1000 * 60));
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+            if (minutes < 60) {
+                  return `${minutes} min ago`;
+            }
+
+            if (hours < 24) {
+                  return `${hours} hrs ago`;
+            }
+
+            return `${days} days ago`;
+      }
 
       return (
             <div className="flex flex-col h-full bg-white">
@@ -47,19 +67,14 @@ const Chatbox = () => {
                                     className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-gray-100 transition border-b border-gray-100"
                               >
                                     {/* Avatar */}
-                                    <div className="relative">
+                                    <div >
                                           <img
                                                 src={`${ServerUrl}${val?.avatar}`}
                                                 alt={val?.name}
                                                 className="w-12 h-12 rounded-full object-cover"
                                           />
 
-                                          <span
-                                                className={`absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-white ${val?.isOnline
-                                                      ? "bg-green-500"
-                                                      : "bg-gray-400"
-                                                      }`}
-                                          />
+
                                     </div>
 
                                     {/* User Info */}
@@ -83,7 +98,7 @@ const Chatbox = () => {
                                     {/* Time / Badge */}
                                     <div className="flex flex-col items-end">
                                           <span className="text-xs text-gray-400">
-                                                12:30 PM
+                                                {changeTime(val?.lastSeen)}
                                           </span>
 
                                           {val?.isOnline && (
