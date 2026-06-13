@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { IoArrowBack, IoMailOutline, IoPersonOutline } from "react-icons/io5";
@@ -15,7 +15,7 @@ const ProfileDetails = ({ isOpen, onClose }) => {
       const navigate = useNavigate();
       const token = localStorage.getItem("Token");
 
-      const fetchProfile = async () => {
+      const fetchProfile = useCallback(async () => {
             try {
                   const response = await fetch(`${BaseUrl}auth/profile`, {
                         method: "GET",
@@ -34,11 +34,12 @@ const ProfileDetails = ({ isOpen, onClose }) => {
             } catch (error) {
                   toast.error(error.message);
             }
-      };
+      }, [token]);
 
       useEffect(() => {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             if (isOpen) fetchProfile();
-      }, [isOpen]);
+      }, [isOpen, fetchProfile]);
 
       const updateUser = async () => {
             setSaving(true);

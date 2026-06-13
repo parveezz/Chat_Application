@@ -24,8 +24,6 @@ const ChatWindow = ({ data, setSelectedUser }) => {
             });
       }, [recievedMessage]);
 
-      if (!data) return null;
-
       // sending the data from the frontend to backend and making connection 
       const sendMessage = () => {
             if (!message.trim()) {
@@ -109,6 +107,8 @@ const ChatWindow = ({ data, setSelectedUser }) => {
             }
 
       }, [data?._id, token]);
+
+      if (!data) return null;
 
       return (
             <div className="flex h-screen bg-white font-sans relative overflow-hidden">
