@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import Login from "../Pages/Login"
 import Register from "../Pages/Register"
 import ProtectedRoute from "./ProtectedRoute"
-import Dashbaord from "../Pages/Dashbaord"
+import Dashboard from "../Pages/Dashboard"
 import ForgotPassword from "../Pages/Forgotpassword"
 
 
@@ -19,7 +19,7 @@ const AppRoute = () => {
                         path="/dashboard"
                         element={
                               <ProtectedRoute>
-                                    <Dashbaord />
+                                    <Dashboard />
                               </ProtectedRoute>
                         }
                   />
