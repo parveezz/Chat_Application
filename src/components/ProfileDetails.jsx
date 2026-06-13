@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { IoArrowBack, IoMailOutline, IoPersonOutline } from "react-icons/io5";
-import { BaseUrl, ServerUrl } from "../../Baseurl";
+import { BaseUrl } from "../../Baseurl";
 import PromptLogout from "./PromptLogout";
+import { ServerUrl } from "../../ServerUrl";
 
 const ProfileDetails = ({ isOpen, onClose }) => {
       const [storeInfo, setStoreInfo] = useState(null);

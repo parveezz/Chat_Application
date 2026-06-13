@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import ProfileDetails from "./ProfileDetails";
 import { IoPersonCircleOutline } from "react-icons/io5";
-import { ServerUrl } from "../../Baseurl";
 import Chatbox from "./Chatbox";
+import { ServerUrl } from "../../ServerUrl";
 
 const Sidebar = ({ setSelectedUser }) => {
       const [openSearch, setOpenSearch] = useState(false);

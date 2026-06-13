@@ -1,42 +1,32 @@
-import { ServerUrl } from "../../Baseurl";
+
 import { IoSend } from "react-icons/io5";
 import { HiDotsHorizontal, HiOutlinePhotograph } from "react-icons/hi";
 import { BsEmojiSmile } from "react-icons/bs";
 import { FiPlus } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UserModal from "./UserModal";
 import { sockets } from "../../sockets";
 import toast from "react-hot-toast";
+import { ServerUrl } from "../../ServerUrl";
+import { BaseUrl } from "../../Baseurl";
 
 const ChatWindow = ({ data }) => {
       const [openUserModal, setOpenUserModal] = useState(false);
       const [message, setMessage] = useState("");
-      if (!data) return null;
+      const [recievedMessage, setRecievedMessages] = useState([]);
 
+      const token = localStorage.getItem("Token")
+      const messagesEndRef = useRef(null);
 
       useEffect(() => {
-            sockets.connect();
+            messagesEndRef.current?.scrollIntoView({
+                  behavior: "smooth"
+            });
+      }, [recievedMessage]);
 
-            sockets.on("error", (err) => {
-                  console.log("error", err.message)
-            })
+      if (!data) return null;
 
-            sockets.on("disconnect", (msg) => {
-                  console.log("disconnect", msg)
-            })
-
-            sockets.on("connect", () => {
-                  console.log("Connected:", sockets.id);
-            })
-
-            return () => {
-                  sockets.off("connect");
-                  sockets.off("disconnect");
-                  sockets.off("connect");
-            }
-      }, []);
-
-
+      // sending the data from the frontend to backend and making connection 
       const sendMessage = () => {
             if (!message.trim()) {
                   toast.error("Enter the Message")
@@ -44,12 +34,81 @@ const ChatWindow = ({ data }) => {
             }
 
             sockets.emit("sendMessage", {
-                  message,
+                  message: message,
                   receiverId: data._id,
-                  senderId: localStorage.getItem("Token")
             })
+
+
             setMessage("")
       }
+
+      useEffect(() => {
+            sockets.connect();
+
+            sockets.on("connect", () => {
+                  console.log("Connected:", sockets.id);
+            })
+
+            sockets.on("error", (err) => {
+                  toast.error(err.message || "Socket Error");
+            });
+
+            sockets.on("disconnect", () => {
+                  toast.error("Socket Disconnected");
+            });
+
+            sockets.on("receiveMessage", (data) => {
+                  setRecievedMessages((prev) => [...prev, data]);
+            });
+
+
+            return () => {
+                  sockets.off("connect");
+                  sockets.off("disconnect");
+                  sockets.off("error");
+                  sockets.off("receiveMessage")
+                  sockets.disconnect();
+            }
+      }, []);
+
+      //storing the message
+
+      useEffect(() => {
+
+            const fetchMessages = async () => {
+                  try {
+
+                        const response = await fetch(
+                              `${BaseUrl}messages/${data?._id}`,
+                              {
+                                    method: "GET",
+                                    headers: {
+                                          "Content-Type": "application/json",
+                                          Authorization: `Bearer ${token}`,
+                                    },
+                              }
+                        );
+
+                        const result = await response.json();
+
+                        console.log(result);
+
+                        if (result.success) {
+                              setRecievedMessages(result.data);
+                        } else {
+                              toast.error(result.message);
+                        }
+
+                  } catch (error) {
+                        toast.error(error.message);
+                  }
+            };
+
+            if (data?._id) {
+                  fetchMessages();
+            }
+
+      }, [data?._id, token]);
 
       return (
             <div className="flex h-screen bg-white font-sans">
@@ -95,13 +154,31 @@ const ChatWindow = ({ data }) => {
                         </div>
 
                         {/* Messages Area */}
-                        <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
-                              <div className="flex justify-center items-center h-full">
-                                    <p className="text-gray-400">
-                                          {message
-                                          }
-                                    </p>
-                              </div>
+                        <div className="flex-1 overflow-y-auto p-4 bg-gray-50 flex flex-col gap-2">
+
+                              {recievedMessage.map((msg) => {
+                                    const isReceiver = msg.senderId === data._id;
+
+                                    return (
+                                          <div
+                                                key={msg._id}
+                                                className={`flex ${isReceiver
+                                                      ? "justify-start"
+                                                      : "justify-end"
+                                                      }`}
+                                          >
+                                                <div
+                                                      className={`max-w-xs px-4 py-2 rounded-2xl shadow break-words ${isReceiver
+                                                            ? "bg-sky-200 text-gray-800"
+                                                            : "bg-yellow-100 text-gray-800"
+                                                            }`}
+                                                >
+                                                      {msg.message}
+                                                </div>
+                                          </div>
+                                    );
+                              })}
+                              <div ref={messagesEndRef} />
                         </div>
 
                         {/* Input Area */}

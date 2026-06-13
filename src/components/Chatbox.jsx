@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
-import { BaseUrl, ServerUrl } from "../../Baseurl";
+import { BaseUrl } from "../../Baseurl";
 import { useEffect, useState } from "react";
+import { ServerUrl } from "../../ServerUrl";
 
 const Chatbox = ({ filterName, setSelectedUser }) => {
       const [storeUser, setStoreUser] = useState([]);

@@ -1,5 +1,6 @@
-import { ServerUrl } from "../../Baseurl";
+
 import { IoClose } from "react-icons/io5";
+import { ServerUrl } from "../../ServerUrl";
 
 const UserModal = ({ data, onClose }) => {
       if (!data) return null;
