@@ -6,8 +6,10 @@ const App = () => {
 
   return (
     <>
-      <Toaster />
-      <AppRoute />
+      <div className="font-sans">
+        <Toaster />
+        <AppRoute />
+      </div>
     </>
   )
 }
