@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import ProfileDetails from "./ProfileDetails";
+import { IoPersonCircleOutline } from "react-icons/io5";
 import { ServerUrl } from "../../Baseurl";
 import Chatbox from "./Chatbox";
 
@@ -69,7 +70,7 @@ const Sidebar = ({ setSelectedUser }) => {
                                                 src={`${ServerUrl}${storeDetails?.avatar}`}
                                                 alt="Your profile"
                                                 className="w-10 h-10 rounded-full object-cover ring-2 ring-transparent group-hover:ring-gray-200 transition-all"
-                                                onClick={() => { setshowProfile(prev => !prev) }}
+
                                           />
                                     </div>
 
@@ -136,35 +137,52 @@ const Sidebar = ({ setSelectedUser }) => {
                   />
 
 
-                  <div className="mt-auto px-2 sm:px-4 py-3">
-                        <div className="flex items-center justify-center gap-1.5">
+                  <div className="mt-auto px-4 py-3 bg-white border-t border-slate-100 flex-shrink-0">
+                        <div className="flex items-center justify-between w-full">
 
-                              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-white shadow-sm border border-gray-100 flex items-center justify-center">
-                                    <span className="text-base sm:text-base sm:text-base sm:text-base sm:text-base sm:text-lg font-bold text-slate-800">
-                                          {time.hours}
-                                    </span>
+                              {/* Clean, Production-Grade Profile Block */}
+                              <div className="flex items-center gap-2"
+                                    onClick={() => { setshowProfile(prev => !prev) }}
+                              >
+                                    <div className="w-9 h-9 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 shadow-sm">
+                                          <IoPersonCircleOutline size={22} />
+                                    </div>
+
                               </div>
 
-                              <span className="text-gray-300 font-bold">:</span>
+                              {/* Digital Clock Display Array */}
+                              <div className="flex items-center gap-1.5">
+                                    {/* Hours */}
+                                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-100/80 flex items-center justify-center shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05),0_1px_3px_-1px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow duration-200">
+                                          <span className="text-xs sm:text-sm font-bold text-slate-800 tracking-tight variant-numeric-normal">
+                                                {time.hours}
+                                          </span>
+                                    </div>
 
-                              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-white shadow-sm border border-gray-100 flex items-center justify-center">
-                                    <span className="text-base sm:text-base sm:text-base sm:text-base sm:text-base sm:text-lg font-bold text-slate-800">
-                                          {time.minutes}
-                                    </span>
-                              </div>
+                                    <span className="text-slate-300 font-bold px-0.5 animate-pulse">:</span>
 
-                              <span className="text-gray-300 font-bold">:</span>
+                                    {/* Minutes */}
+                                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-100/80 flex items-center justify-center shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05),0_1px_3px_-1px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow duration-200">
+                                          <span className="text-xs sm:text-sm font-bold text-slate-800 tracking-tight">
+                                                {time.minutes}
+                                          </span>
+                                    </div>
 
-                              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-white shadow-sm border border-gray-100 flex items-center justify-center">
-                                    <span className="text-base sm:text-base sm:text-base sm:text-base sm:text-base sm:text-lg font-bold text-slate-800">
-                                          {time.seconds}
-                                    </span>
-                              </div>
+                                    <span className="text-slate-300 font-bold px-0.5 animate-pulse">:</span>
 
-                              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-slate-800 text-white shadow-sm flex items-center justify-center">
-                                    <span className="text-sm font-bold">
-                                          {time.period}
-                                    </span>
+                                    {/* Seconds */}
+                                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-100/80 flex items-center justify-center shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05),0_1px_3px_-1px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow duration-200">
+                                          <span className="text-xs sm:text-sm font-bold text-slate-800 tracking-tight">
+                                                {time.seconds}
+                                          </span>
+                                    </div>
+
+                                    {/* AM/PM Period Box */}
+                                    <div className="w-9 h-9 sm:w-10 sm:h-10 ml-0.5 rounded-xl bg-slate-800 text-white flex items-center justify-center shadow-[0_4px_12px_-4px_rgba(15,23,42,0.3)]">
+                                          <span className="text-[10px] font-bold tracking-wider uppercase">
+                                                {time.period}
+                                          </span>
+                                    </div>
                               </div>
 
                         </div>
